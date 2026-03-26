@@ -1,1 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>ImSketch1337 | Project XELIT</title>
+    <style>
+        body { background: #0a0a0a; color: #00ff41; font-family: 'Courier New', monospace; text-align: center; padding-top: 50px; }
+        .container { border: 1px solid #00ff41; display: inline-block; padding: 20px; box-shadow: 0 0 15px #00ff41; }
+        .status { font-weight: bold; text-transform: uppercase; margin: 15px 0; }
+        .timer { font-size: 1.5em; color: #ff3e3e; }
+        .info { border-top: 1px solid #333; margin-top: 20px; padding-top: 10px; font-size: 0.9em; color: #888; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>[ IM SKETCH 1337 ]</h1>
+        <p>Dev: XELIT Protocol / Minecraft Security Researcher</p>
+
+        <div class="status" id="strike-status">Страйков не наблюдается</div>
+        
+        <hr>
+
+        <div class="status" id="main-status">Подготовка...</div>
+        <div class="timer" id="countdown"></div>
+
+        <div class="info">
+            Локация: Ейский район | Канал: 4G+ (195 Mbps)
+        </div>
+    </div>
+
+    <script>
+        // Настройка даты (23 мая 2026)
+        const targetDate = new Date("May 23, 2026 00:00:00").getTime();
+
+        // Настройка страйков (измени 0 на количество, если прилетит)
+        let strikesCount = 0;
+        let strikesMax = 3;
+
+        function updateTimer() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            let statusEl = document.getElementById("main-status");
+            let timerEl = document.getElementById("countdown");
+            let strikeEl = document.getElementById("strike-status");
+
+            // Логика страйков
+            if (strikesCount > 0) {
+                strikeEl.innerHTML = `⚠️ Страйк наблюдается: ${strikesCount} из ${strikesMax} готово`;
+                strikeEl.style.color = "orange";
+            }
+
+            // Логика таймера
+            if (distance < 0) {
+                // Если 23 мая уже наступило (на один день)
+                if (distance > -86400000) {
+                    statusEl.innerHTML = "🔥 ВЗЛОМ НАЧАТ! 23 МАЯ";
+                    timerEl.innerHTML = "SYSTEM OVERRIDE IN PROGRESS...";
+                } else {
+                    statusEl.innerHTML = "Взлом окончен, следующий будет нескоро...";
+                    timerEl.innerHTML = "";
+                }
+            } else {
+                statusEl.innerHTML = `Взлом готов, будет 23 мая через:`;
+                timerEl.innerHTML = `${days}д ${hours}ч ${minutes}м ${seconds}с`;
+            }
+        }
+
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+</html>
 
